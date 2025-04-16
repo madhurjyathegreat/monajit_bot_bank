@@ -33,7 +33,7 @@ def load_and_process_data(file_path):
     return docs
 
 # Load data and create vectorstore
-file_path = "/Users/bhargavprasaddas/PycharmProjects/PythonProject1/bank_data.csv"  # Ensure this path is accessible within the Streamlit app
+file_path = "bank_data.csv"  # Ensure this path is accessible within the Streamlit app
 data = load_and_process_data(file_path)
 
 @st.cache_resource
