@@ -6,6 +6,8 @@ from langchain.vectorstores import FAISS
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.text_splitter import CharacterTextSplitter
 from langchain_community.document_loaders import CSVLoader
+import pandas as pd
+import altair as alt
 
 
 # Install pyngrok (run this in a separate cell first)
@@ -69,6 +71,56 @@ qa = create_qa_chain(llm, vectorstore)
 st.title("Bank Data Chatbot")
 st.write("Ask questions about your bank data.")
 
+# Display a sample of the data
+
+st.subheader("Glance at the Data:")
+df=pd.read_csv('bank_data.csv')
+st.dataframe(df)
+
+
+# Charts
+# Charts
+if df is not None:
+    st.subheader("Data Visualizations")
+
+    # Bar chart of Balance per Customer
+    chart_balance_per_customer = alt.Chart(df).mark_bar().encode(
+        x=alt.X('Balance:Q', title='Balance Amount'),
+        y=alt.Y('Customer Name:N', sort='-x', title='Customer Name'),  # Sort by balance descending
+        tooltip=['Customer Name', 'Balance']
+    ).properties(
+        title='Balance Amount per Customer'
+    )
+    st.altair_chart(chart_balance_per_customer, use_container_width=True)
+
+    st.markdown("---")
+
+    # Bar chart of Account Type distribution (as before)
+    account_type_counts = df['Account Type'].value_counts().reset_index()
+    account_type_counts.columns = ['Account Type', 'Count']
+    chart_account_type = alt.Chart(account_type_counts).mark_bar().encode(
+        x='Account Type:N',
+        y='Count:Q',
+        tooltip=['Account Type', 'Count']
+    ).properties(
+        title='Distribution of Account Types'
+    )
+    st.altair_chart(chart_account_type, use_container_width=True)
+
+    # Bar chart of Average Balance per Account Type (as before)
+    avg_balance_per_type = df.groupby('Account Type')['Balance'].mean().reset_index()
+    chart_avg_balance = alt.Chart(avg_balance_per_type).mark_bar().encode(
+        x='Account Type:N',
+        y='Balance:Q',
+        tooltip=['Account Type', alt.Tooltip('Balance', format=',.2f')]
+    ).properties(
+        title='Average Balance per Account Type'
+    )
+    st.altair_chart(chart_avg_balance, use_container_width=True)
+else:
+    st.info("No data available to generate charts.")
+
+
 # Initialize chat history in Streamlit session state
 if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", "content": "Hello! How can I help you with your bank data?"}]
@@ -90,4 +142,3 @@ if prompt := st.chat_input("Your question"):
             response = qa.run(prompt)
             st.markdown(response)
         st.session_state["messages"].append({"role": "assistant", "content": response})
-
