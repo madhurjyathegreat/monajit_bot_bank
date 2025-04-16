@@ -1,0 +1,11 @@
+Account Number,Customer Name,Account Type,Balance,Last Transaction Date,Transaction Type,Transaction Amount,Branch
+10010001,Alice Johnson,Savings,2500.75,2025-04-10,Deposit,500.0,New York
+10010002,Bob Smith,Current,12000.0,2025-04-12,Withdrawal,1000.0,Los Angeles
+10010003,Charlie Patel,Savings,600.25,2025-03-29,Deposit,200.0,Chicago
+10010004,Diana Singh,Current,17500.0,2025-04-01,Withdrawal,1500.0,Houston
+10010005,Ethan Brown,Savings,320.0,2025-04-11,Deposit,150.0,Phoenix
+10010006,Fiona Davis,Current,9250.0,2025-04-13,Withdrawal,750.0,San Francisco
+10010007,George Lee,Savings,1100.5,2025-04-08,Deposit,300.0,Boston
+10010008,Hannah Kim,Current,20350.0,2025-04-05,Deposit,2000.0,Seattle
+10010009,Ian Wright,Savings,980.0,2025-03-30,Withdrawal,180.0,Miami
+10010010,Julia Adams,Current,15600.75,2025-04-02,Deposit,1200.0,Denver
